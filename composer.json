@@ -1,0 +1,38 @@
+{
+	"name": "leuchtdiode/laminas-mail",
+	"description": "Laminas module for handling mails",
+	"type": "library",
+	"license": "MIT",
+	"homepage": "https://try2catch.com",
+	"authors": [
+		{
+			"name": "Alex Schloegl",
+			"email": "alex@try2catch.com",
+			"homepage": "https://try2catch.com",
+			"role": "Developer"
+		}
+	],
+	"keywords": [
+		"Laminas",
+		"Module",
+		"Mail"
+	],
+	"require": {
+		"php": ">=7.1",
+		"laminas/laminas-servicemanager": "^3.0",
+		"laminas/laminas-mvc-console": "^1.1",
+		"laminas/laminas-mail": "^2.10",
+		"doctrine/doctrine-orm-module": "^3.0",
+		"ramsey/uuid-doctrine": "^1.4",
+		"leuchtdiode/laminas-common": "^1.0"
+	},
+	"require-dev": {
+		"leuchtdiode/laminas-testing": "^0.1"
+	},
+	"autoload": {
+		"psr-4": {
+			"Mail\\": "src/",
+			"MailTest\\": "test/src/"
+		}
+	}
+}
