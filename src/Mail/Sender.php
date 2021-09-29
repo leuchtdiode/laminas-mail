@@ -159,6 +159,8 @@ class Sender
 		catch (Exception $ex)
 		{
 			$mailEntity->setError($ex->getMessage());
+
+			$this->saver->save($mailEntity);
 		}
 
 		return false;
@@ -201,10 +203,7 @@ class Sender
 		}
 	}
 
-	/**
-	 * @return bool
-	 */
-	private function isDebugEnabled()
+	private function isDebugEnabled(): bool
 	{
 		return $this->mailConfig['debug']['enabled'] ?? false;
 	}
