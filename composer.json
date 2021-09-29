@@ -18,9 +18,9 @@
 		"Mail"
 	],
 	"require": {
-		"php": ">=7.1",
+		"php": ">=7.4",
 		"laminas/laminas-servicemanager": "^3.0",
-		"laminas/laminas-mvc-console": "^1.1",
+		"leuchtdiode/laminas-console": "^0.1",
 		"laminas/laminas-mail": "^2.10",
 		"doctrine/doctrine-orm-module": "^3.0",
 		"ramsey/uuid-doctrine": "^1.4",

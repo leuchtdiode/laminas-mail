@@ -4,6 +4,7 @@ namespace Mail\Queue;
 use Common\Db\FilterChain;
 use Common\Db\OrderChain;
 use Exception;
+use Mail\Db\MailEntity\Filter\Error;
 use Mail\Db\MailEntity\Filter\Sent;
 use Mail\Db\MailEntity\Order\CreatedAt;
 use Mail\Mail\Sender as MailSender;
@@ -11,20 +12,10 @@ use Mail\Db\MailEntityRepository;
 
 class UnsentMailsSender
 {
-	/**
-	 * @var MailEntityRepository
-	 */
-	private $repository;
+	private MailEntityRepository $repository;
 
-	/**
-	 * @var MailSender
-	 */
-	private $mailSender;
+	private MailSender $mailSender;
 
-	/**
-	 * @param MailEntityRepository $repository
-	 * @param MailSender $mailSender
-	 */
 	public function __construct(
 		MailEntityRepository $repository,
 		MailSender $mailSender
@@ -41,7 +32,8 @@ class UnsentMailsSender
 	{
 		$mails = $this->repository->filter(
 			FilterChain::create()
-				->addFilter(Sent::no()),
+				->addFilter(Sent::no())
+				->addFilter(Error::isNull()),
 			OrderChain::create()
 				->addOrder(CreatedAt::desc())
 		);

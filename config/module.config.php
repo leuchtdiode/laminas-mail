@@ -1,9 +1,8 @@
 <?php
 namespace Mail;
 
-use Common\Router\ConsoleRouteCreator;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
-use Mail\Action\Queue\Send;
+use Mail\Command\Queue\Send;
 
 return [
 
@@ -14,7 +13,7 @@ return [
 				'cache' => 'array',
 				'paths' => [ __DIR__ . '/../src' ],
 			],
-			'orm_default' => [
+			'orm_default'   => [
 				'drivers' => [
 					'Mail' => 'mail_entities',
 				],
@@ -22,26 +21,21 @@ return [
 		],
 	],
 
-	'console'	=> [
-		'router'	=> [
-			'routes'	=> [
-				'mail-queue-send'	=> ConsoleRouteCreator::create()
-					->setRoute('mail queue send')
-					->setAction(Send::class)
-					->getConfig()
-			]
+	'console' => [
+		'commands' => [
+			Send::class,
 		],
 	],
 
 	'service_manager' => [
-		'abstract_factories'	=> [
-			DefaultFactory::class
+		'abstract_factories' => [
+			DefaultFactory::class,
 		],
 	],
 
 	'controllers' => [
-		'abstract_factories'	=> [
-			DefaultFactory::class
+		'abstract_factories' => [
+			DefaultFactory::class,
 		],
 	],
 ];
