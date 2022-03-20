@@ -8,26 +8,17 @@ use Mail\Db\Attachment\Entity;
 
 class FileSystemHandler
 {
-	/**
-	 * @var array
-	 */
-	private $config;
+	private array $config;
 
-	/**
-	 * @param array $config
-	 */
 	public function __construct(array $config)
 	{
 		$this->config = $config;
 	}
 
 	/**
-	 * @param Entity $entity
-	 * @param string $content
-	 * @return bool
 	 * @throws Exception
 	 */
-	public function write(Entity $entity, string $content)
+	public function write(Entity $entity, string $content): bool
 	{
 		$this->ensureDirectoryOrFail();
 
@@ -36,11 +27,7 @@ class FileSystemHandler
 		return file_put_contents($path, $content) !== false;
 	}
 
-	/**
-	 * @param Entity $entity
-	 * @return string|null
-	 */
-	public function read(Entity $entity)
+	public function read(Entity $entity): ?string
 	{
 		$path = $this->getPath($entity);
 
@@ -52,10 +39,7 @@ class FileSystemHandler
 		return file_get_contents($path);
 	}
 
-	/**
-	 * @return string
-	 */
-	private function getDirectory()
+	private function getDirectory(): ?string
 	{
 		return $this->config['mail']['attachment']['storeDirectory'] ?? null;
 	}
@@ -63,7 +47,7 @@ class FileSystemHandler
 	/**
 	 * @throws Exception
 	 */
-	private function ensureDirectoryOrFail()
+	private function ensureDirectoryOrFail(): void
 	{
 		$directory = $this->getDirectory();
 
@@ -73,10 +57,6 @@ class FileSystemHandler
 		}
 	}
 
-	/**
-	 * @param Entity $entity
-	 * @return string
-	 */
 	private function getPath(Entity $entity): string
 	{
 		return sprintf(

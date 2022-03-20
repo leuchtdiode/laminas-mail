@@ -1,44 +1,12 @@
 <?php
 namespace Mail\Db\MailEntity\Order;
 
-use Common\Db\Order;
-use Doctrine\ORM\QueryBuilder;
+use Common\Db\Order\AscOrDesc;
 
-class CreatedAt implements Order
+class CreatedAt extends AscOrDesc
 {
-	const DB_COLUMN = 't.createdAt';
-
-	/**
-	 * @var string
-	 */
-	private $direction;
-
-	/**
-	 * @param string $direction
-	 */
-	private function __construct($direction)
+	protected function getField(): string
 	{
-		$this->direction = $direction;
-	}
-
-	/**
-	 * @return CreatedAt
-	 */
-	public static function asc()
-	{
-		return new self('ASC');
-	}
-
-	/**
-	 * @return CreatedAt
-	 */
-	public static function desc()
-	{
-		return new self('DESC');
-	}
-
-	public function addOrder(QueryBuilder $queryBuilder)
-	{
-		$queryBuilder->addOrderBy(self::DB_COLUMN, $this->direction);
+		return 't.createdAt';
 	}
 }

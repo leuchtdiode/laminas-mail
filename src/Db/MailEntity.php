@@ -1,91 +1,76 @@
 <?php
 namespace Mail\Db;
 
+use Common\Db\Entity;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Mail\Db\Attachment\Entity as AttachmentEntity;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="mail_mails")
- * @ORM\Entity(repositoryClass="Mail\Db\MailEntityRepository")
- */
-class MailEntity
+#[ORM\Entity(repositoryClass: MailEntityRepository::class)]
+#[ORM\Table(name: 'mail_mails')]
+class MailEntity implements Entity
 {
-	/**
-	 * @var UuidInterface
-	 *
-	 * @ORM\Id
-	 * @ORM\Column(type="uuid");
-	 */
-	private $id;
+	#[ORM\Id]
+	#[ORM\Column(type: 'uuid')]
+	private UuidInterface $id;
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(type="string")
-	 */
-	private $subject;
+	#[ORM\Column(type: 'string')]
+	private string $subject;
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(type="text")
-	 */
-	private $body;
+	#[ORM\Column(type: 'text')]
+	private string $body;
 
-	/**
-	 * @var DateTime
-	 *
-	 * @ORM\Column(type="datetime")
-	 */
-	private $createdAt;
+	#[ORM\Column(type: 'datetime')]
+	private DateTime $createdAt;
 
-	/**
-	 * @var DateTime|null
-	 *
-	 * @ORM\Column(type="datetime", nullable=true)
-	 */
-	private $sentAt;
+	#[ORM\Column(type: 'datetime', nullable: true)]
+	private ?DateTime $sentAt = null;
 
-	/**
-	 * @var string|null
-	 *
-	 * @ORM\Column(type="string", nullable=true)
-	 */
-	private $error;
+	#[ORM\Column(type: 'string', nullable: true)]
+	private ?string $error = null;
 
+	#[ORM\OneToMany(
+		mappedBy: 'mail',
+		targetEntity: RecipientEntity::class,
+		cascade: [ 'all'],
+		orphanRemoval: true
+	)]
 	/**
-	 * @var ArrayCollection|RecipientEntity[]
-	 *
-	 * @ORM\OneToMany(targetEntity="Mail\Db\RecipientEntity", mappedBy="mail", cascade={"all"}, orphanRemoval=true)
+	 * @var Collection|RecipientEntity[]
 	 **/
-	private $recipients;
+	private Collection|array $recipients;
 
-	/**
-	 * @var FromEntity
-	 *
-	 * @ORM\OneToOne(targetEntity="Mail\Db\FromEntity", mappedBy="mail", cascade={"all"}, orphanRemoval=true)
-	 **/
-	private $from;
+	#[ORM\OneToOne(
+		mappedBy: 'mail',
+		targetEntity: FromEntity::class,
+		cascade: [ 'all'],
+		orphanRemoval: true
+	)]
+	private FromEntity $from;
 
-	/**
-	 * @var ReplyToEntity|null
-	 *
-	 * @ORM\OneToOne(targetEntity="Mail\Db\ReplyToEntity", mappedBy="mail", cascade={"all"}, orphanRemoval=true)
-	 **/
-	private $replyTo;
+	#[ORM\OneToOne(
+		mappedBy: 'mail',
+		targetEntity: ReplyToEntity::class,
+		cascade: [ 'all'],
+		orphanRemoval: true
+	)]
+	private ?ReplyToEntity $replyTo = null;
 
+	#[ORM\OneToMany(
+		mappedBy: 'mail',
+		targetEntity: AttachmentEntity::class,
+		cascade: [ 'all'],
+		orphanRemoval: true
+	)]
 	/**
-	 * @var ArrayCollection|AttachmentEntity[]
-	 *
-	 * @ORM\OneToMany(targetEntity="Mail\Db\Attachment\Entity", mappedBy="mail", cascade={"all"}, orphanRemoval=true)
+	 * @var Collection|AttachmentEntity[]
 	 **/
-	private $attachments;
+	private Collection|array $attachments;
 
 	/**
 	 * @throws Exception
@@ -98,162 +83,102 @@ class MailEntity
 		$this->attachments = new ArrayCollection();
 	}
 
-	/**
-	 * @return UuidInterface
-	 */
-	public function getId()
+	public function getId(): UuidInterface
 	{
 		return $this->id;
 	}
 
-	/**
-	 * @param UuidInterface $id
-	 */
-	public function setId($id)
+	public function setId(UuidInterface $id): void
 	{
 		$this->id = $id;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function getSubject()
+	public function getSubject(): string
 	{
 		return $this->subject;
 	}
 
-	/**
-	 * @param string $subject
-	 */
-	public function setSubject($subject)
+	public function setSubject(string $subject): void
 	{
 		$this->subject = $subject;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function getBody()
+	public function getBody(): string
 	{
 		return $this->body;
 	}
 
-	/**
-	 * @param string $body
-	 */
-	public function setBody($body)
+	public function setBody(string $body): void
 	{
 		$this->body = $body;
 	}
 
-	/**
-	 * @return DateTime
-	 */
-	public function getCreatedAt()
+	public function getCreatedAt(): DateTime
 	{
 		return $this->createdAt;
 	}
 
-	/**
-	 * @param DateTime $createdAt
-	 */
-	public function setCreatedAt($createdAt)
+	public function setCreatedAt(DateTime $createdAt): void
 	{
 		$this->createdAt = $createdAt;
 	}
 
-	/**
-	 * @return DateTime|null
-	 */
-	public function getSentAt()
+	public function getSentAt(): ?DateTime
 	{
 		return $this->sentAt;
 	}
 
-	/**
-	 * @param DateTime $sentAt
-	 */
-	public function setSentAt($sentAt)
+	public function setSentAt(?DateTime $sentAt): void
 	{
 		$this->sentAt = $sentAt;
 	}
 
-	/**
-	 * @return string|null
-	 */
-	public function getError()
+	public function getError(): ?string
 	{
 		return $this->error;
 	}
 
-	/**
-	 * @param string $error
-	 */
-	public function setError($error)
+	public function setError(?string $error): void
 	{
 		$this->error = $error;
 	}
 
-	/**
-	 * @return ArrayCollection|RecipientEntity[]
-	 */
-	public function getRecipients()
+	public function getRecipients(): array|ArrayCollection|Collection
 	{
 		return $this->recipients;
 	}
 
-	/**
-	 * @param ArrayCollection|RecipientEntity[] $recipients
-	 */
-	public function setRecipients($recipients)
+	public function setRecipients(array|ArrayCollection|Collection $recipients): void
 	{
 		$this->recipients = $recipients;
 	}
 
-	/**
-	 * @return FromEntity
-	 */
-	public function getFrom()
+	public function getFrom(): FromEntity
 	{
 		return $this->from;
 	}
 
-	/**
-	 * @param FromEntity $from
-	 */
-	public function setFrom($from)
+	public function setFrom(FromEntity $from): void
 	{
 		$this->from = $from;
 	}
 
-	/**
-	 * @return ReplyToEntity|null
-	 */
-	public function getReplyTo()
+	public function getReplyTo(): ?ReplyToEntity
 	{
 		return $this->replyTo;
 	}
 
-	/**
-	 * @param ReplyToEntity|null $replyTo
-	 */
-	public function setReplyTo($replyTo)
+	public function setReplyTo(?ReplyToEntity $replyTo): void
 	{
 		$this->replyTo = $replyTo;
 	}
 
-	/**
-	 * @return ArrayCollection|AttachmentEntity[]
-	 */
-	public function getAttachments()
+	public function getAttachments(): ArrayCollection|Collection|array
 	{
 		return $this->attachments;
 	}
 
-	/**
-	 * @param ArrayCollection|AttachmentEntity[] $attachments
-	 */
-	public function setAttachments($attachments): void
+	public function setAttachments(ArrayCollection|Collection|array $attachments): void
 	{
 		$this->attachments = $attachments;
 	}

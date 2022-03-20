@@ -3,20 +3,13 @@ namespace Mail\Mail;
 
 class Recipient
 {
-	/**
-	 * @var string
-	 */
-	private $email;
+	private string $email;
 
 	/**
 	 * @var string|null
 	 */
-	private $name;
+	private ?string $name = null;
 
-	/**
-	 * @param string $email
-	 * @param null|string $name
-	 */
 	private function __construct(
 		$email,
 		$name = null
@@ -26,44 +19,27 @@ class Recipient
 		$this->name = $name;
 	}
 
-	/**
-	 * @param string $email
-	 * @param string|null $name
-	 * @return Recipient
-	 */
-	public static function create($email, $name = null)
+	public static function create(string $email, string $name = null): self
 	{
 		return new self($email, $name);
 	}
 
-	/**
-	 * @return string
-	 */
 	public function getEmail(): string
 	{
 		return $this->email;
 	}
 
-	/**
-	 * @param string $email
-	 */
 	public function setEmail(string $email)
 	{
 		$this->email = $email;
 	}
 
-	/**
-	 * @return null|string
-	 */
-	public function getName()
+	public function getName(): ?string
 	{
 		return $this->name;
 	}
 
-	/**
-	 * @param null|string $name
-	 */
-	public function setName($name)
+	public function setName(?string $name)
 	{
 		$this->name = $name;
 	}

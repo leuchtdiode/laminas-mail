@@ -2,6 +2,7 @@
 namespace MailTest\Queue;
 
 use DateTime;
+use Doctrine\ORM\Tools\ToolsException;
 use Exception;
 use Mail\Db\Attachment\Entity;
 use Mail\Db\MailEntity;
@@ -16,15 +17,12 @@ use Testing\BaseTestCase;
 
 class QueueTest extends BaseTestCase
 {
-	/**
-	 * @var Queue
-	 */
-	private $queue;
+	private Queue $queue;
 
 	/**
-	 * @throws \Doctrine\ORM\Tools\ToolsException
+	 * @throws ToolsException
 	 */
-	public function setUp()
+	public function setUp(): void
 	{
 		parent::setUp();
 
@@ -209,25 +207,15 @@ class QueueTest extends BaseTestCase
 
 class TestPlaceholderValues implements PlaceholderValues
 {
-	/**
-	 * @var string
-	 */
-	private $placeholder;
+	private string $placeholder;
 
-	/**
-	 * @param string $placeholder
-	 * @return TestPlaceholderValues
-	 */
 	public function setPlaceholder(string $placeholder): TestPlaceholderValues
 	{
 		$this->placeholder = $placeholder;
 		return $this;
 	}
 
-	/**
-	 * @return array|string
-	 */
-	public function asArray()
+	public function asArray(): array
 	{
 		return [
 			'placeholder' => $this->placeholder

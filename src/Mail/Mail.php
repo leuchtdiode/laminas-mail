@@ -6,81 +6,51 @@ class Mail
 	/**
 	 * @var Recipient[]
 	 */
-	private $to = [];
+	private array $to = [];
 
 	/**
 	 * @var Recipient[]
 	 */
-	private $cc = [];
+	private array $cc = [];
 
 	/**
 	 * @var Recipient[]
 	 */
-	private $bcc = [];
+	private array $bcc = [];
 
-	/**
-	 * @var Recipient
-	 */
-	private $from;
+	private Recipient $from;
 
-	/**
-	 * @var Recipient|null
-	 */
-	private $replyTo;
+	private ?Recipient $replyTo = null;
 
-	/**
-	 * @var string
-	 */
-	private $subject;
+	private string $subject;
 
-	/**
-	 * @var string
-	 */
-	private $layoutTemplate;
+	private string $layoutTemplate;
 
-	/**
-	 * @var string
-	 */
-	private $contentTemplate;
+	private string $contentTemplate;
 
-	/**
-	 * @var PlaceholderValues|null
-	 */
-	private $placeholderValues;
+	private ?PlaceholderValues $placeholderValues = null;
 
 	/**
 	 * @var Attachment[]
 	 */
-	private $attachments = [];
+	private array $attachments = [];
 
-	/**
-	 * @param Recipient $recipient
-	 */
-	public function addTo(Recipient $recipient)
+	public function addTo(Recipient $recipient): void
 	{
 		$this->to[] = $recipient;
 	}
 
-	/**
-	 * @param Recipient $recipient
-	 */
-	public function addCc(Recipient $recipient)
+	public function addCc(Recipient $recipient): void
 	{
 		$this->cc[] = $recipient;
 	}
 
-	/**
-	 * @param Recipient $recipient
-	 */
-	public function addBcc(Recipient $recipient)
+	public function addBcc(Recipient $recipient): void
 	{
 		$this->bcc[] = $recipient;
 	}
 
-	/**
-	 * @param Attachment $attachment
-	 */
-	public function addAttachment(Attachment $attachment)
+	public function addAttachment(Attachment $attachment): void
 	{
 		$this->attachments[] = $attachment;
 	}
@@ -88,7 +58,7 @@ class Mail
 	/**
 	 * @param Recipient[] $to
 	 */
-	public function setTo(array $to)
+	public function setTo(array $to): void
 	{
 		$this->to = $to;
 	}
@@ -96,7 +66,7 @@ class Mail
 	/**
 	 * @param Recipient[] $cc
 	 */
-	public function setCc(array $cc)
+	public function setCc(array $cc): void
 	{
 		$this->cc = $cc;
 	}
@@ -104,47 +74,32 @@ class Mail
 	/**
 	 * @param Recipient[] $bcc
 	 */
-	public function setBcc(array $bcc)
+	public function setBcc(array $bcc): void
 	{
 		$this->bcc = $bcc;
 	}
 
-	/**
-	 * @param Recipient $from
-	 */
-	public function setFrom(Recipient $from)
+	public function setFrom(Recipient $from): void
 	{
 		$this->from = $from;
 	}
 
-	/**
-	 * @param Recipient|null $replyTo
-	 */
-	public function setReplyTo(?Recipient $replyTo)
+	public function setReplyTo(?Recipient $replyTo): void
 	{
 		$this->replyTo = $replyTo;
 	}
 
-	/**
-	 * @param string $subject
-	 */
-	public function setSubject(string $subject)
+	public function setSubject(string $subject): void
 	{
 		$this->subject = $subject;
 	}
 
-	/**
-	 * @param string $layoutTemplate
-	 */
-	public function setLayoutTemplate(string $layoutTemplate)
+	public function setLayoutTemplate(string $layoutTemplate): void
 	{
 		$this->layoutTemplate = $layoutTemplate;
 	}
 
-	/**
-	 * @param string $contentTemplate
-	 */
-	public function setContentTemplate(string $contentTemplate)
+	public function setContentTemplate(string $contentTemplate): void
 	{
 		$this->contentTemplate = $contentTemplate;
 	}
@@ -173,58 +128,37 @@ class Mail
 		return $this->bcc;
 	}
 
-	/**
-	 * @return Recipient
-	 */
 	public function getFrom(): Recipient
 	{
 		return $this->from;
 	}
 
-	/**
-	 * @return Recipient|null
-	 */
 	public function getReplyTo(): ?Recipient
 	{
 		return $this->replyTo;
 	}
 
-	/**
-	 * @return string
-	 */
 	public function getSubject(): string
 	{
 		return $this->subject;
 	}
 
-	/**
-	 * @return string
-	 */
 	public function getLayoutTemplate(): string
 	{
 		return $this->layoutTemplate;
 	}
 
-	/**
-	 * @return string
-	 */
 	public function getContentTemplate(): string
 	{
 		return $this->contentTemplate;
 	}
 
-	/**
-	 * @return PlaceholderValues|null
-	 */
-	public function getPlaceholderValues()
+	public function getPlaceholderValues(): ?PlaceholderValues
 	{
 		return $this->placeholderValues;
 	}
 
-	/**
-	 * @param PlaceholderValues|null $placeholderValues
-	 */
-	public function setPlaceholderValues($placeholderValues)
+	public function setPlaceholderValues(?PlaceholderValues $placeholderValues): void
 	{
 		$this->placeholderValues = $placeholderValues;
 	}

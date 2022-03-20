@@ -1,7 +1,7 @@
 <?php
 namespace Mail;
 
-use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
+use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 use Mail\Command\Queue\Send;
 
 return [
@@ -9,7 +9,7 @@ return [
 	'doctrine' => [
 		'driver' => [
 			'mail_entities' => [
-				'class' => AnnotationDriver::class,
+				'class' => AttributeDriver::class,
 				'cache' => 'array',
 				'paths' => [ __DIR__ . '/../src' ],
 			],

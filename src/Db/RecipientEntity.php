@@ -1,57 +1,44 @@
 <?php
 namespace Mail\Db;
 
+use Common\Db\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="mail_recipients")
- */
-class RecipientEntity
+#[ORM\Entity]
+#[ORM\Table(name: 'mail_recipients')]
+class RecipientEntity implements Entity
 {
-	const TYPE_TO 	= 1;
-	const TYPE_CC	= 2;
-	const TYPE_BCC	= 3;
+	const TYPE_TO  = 1;
+	const TYPE_CC  = 2;
+	const TYPE_BCC = 3;
 
-	/**
-	 * @var UuidInterface
-	 *
-	 * @ORM\Id
-	 * @ORM\Column(type="uuid");
-	 */
-	private $id;
+	#[ORM\Id]
+	#[ORM\Column(type: 'uuid')]
+	private UuidInterface $id;
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(type="string")
-	 */
-	private $email;
+	#[ORM\Column(type: 'string')]
+	private string $email;
 
-	/**
-	 * @var string|null
-	 *
-	 * @ORM\Column(type="string", nullable=true)
-	 */
-	private $name;
+	#[ORM\Column(type: 'string', nullable: true)]
+	private ?string $name = null;
 
-	/**
-	 * @var integer
-	 *
-	 * @ORM\Column(type="integer")
-	 */
-	private $type;
+	#[ORM\Column(type: 'integer')]
+	private int $type;
 
-	/**
-	 * @var MailEntity
-	 *
-	 * @ORM\ManyToOne(targetEntity="Mail\Db\MailEntity", inversedBy="recipients", cascade={"persist"})
-	 * @ORM\JoinColumn(name="mailId", referencedColumnName="id", nullable=false, onDelete="CASCADE")
-	 **/
-	private $mail;
+	#[ORM\ManyToOne(
+		targetEntity: MailEntity::class,
+		cascade: [ 'persist' ],
+		inversedBy: 'recipients'
+	)]
+	#[ORM\JoinColumn(
+		name: 'mailId',
+		nullable: false,
+		onDelete: 'CASCADE'
+	)]
+	private MailEntity $mail;
 
 	/**
 	 * @throws Exception
@@ -61,82 +48,52 @@ class RecipientEntity
 		$this->id = Uuid::uuid4();
 	}
 
-	/**
-	 * @return UuidInterface
-	 */
-	public function getId()
+	public function getId(): UuidInterface
 	{
 		return $this->id;
 	}
 
-	/**
-	 * @param UuidInterface $id
-	 */
-	public function setId($id)
+	public function setId(UuidInterface $id): void
 	{
 		$this->id = $id;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function getEmail()
+	public function getEmail(): string
 	{
 		return $this->email;
 	}
 
-	/**
-	 * @param string $email
-	 */
-	public function setEmail($email)
+	public function setEmail(string $email): void
 	{
 		$this->email = $email;
 	}
 
-	/**
-	 * @return string|null
-	 */
-	public function getName()
+	public function getName(): ?string
 	{
 		return $this->name;
 	}
 
-	/**
-	 * @param string|null $name
-	 */
-	public function setName($name)
+	public function setName(?string $name): void
 	{
 		$this->name = $name;
 	}
 
-	/**
-	 * @return int
-	 */
-	public function getType()
+	public function getType(): int
 	{
 		return $this->type;
 	}
 
-	/**
-	 * @param int $type
-	 */
-	public function setType($type)
+	public function setType(int $type): void
 	{
 		$this->type = $type;
 	}
 
-	/**
-	 * @return MailEntity
-	 */
-	public function getMail()
+	public function getMail(): MailEntity
 	{
 		return $this->mail;
 	}
 
-	/**
-	 * @param MailEntity $mail
-	 */
-	public function setMail($mail)
+	public function setMail(MailEntity $mail): void
 	{
 		$this->mail = $mail;
 	}

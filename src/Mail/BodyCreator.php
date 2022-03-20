@@ -6,24 +6,14 @@ use Laminas\View\Renderer\PhpRenderer;
 
 class BodyCreator
 {
-	/**
-	 * @var PhpRenderer
-	 */
-	private $phpRenderer;
+	private PhpRenderer $phpRenderer;
 
-	/**
-	 * @param PhpRenderer $phpRenderer
-	 */
 	public function __construct(PhpRenderer $phpRenderer)
 	{
 		$this->phpRenderer = $phpRenderer;
 	}
 
-	/**
-	 * @param Mail $mail
-	 * @return string
-	 */
-	public function forMail(Mail $mail)
+	public function forMail(Mail $mail): string
 	{
 		$placeholderValues = $mail->getPlaceholderValues()
 			? $mail->getPlaceholderValues()->asArray()

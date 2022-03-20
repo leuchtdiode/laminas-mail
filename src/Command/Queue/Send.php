@@ -11,9 +11,6 @@ class Send extends BaseCommand
 {
 	private UnsentMailsSender $unsentMailsSender;
 
-	/**
-	 * @param UnsentMailsSender $unsentMailsSender
-	 */
 	public function __construct(UnsentMailsSender $unsentMailsSender)
 	{
 		$this->unsentMailsSender = $unsentMailsSender;

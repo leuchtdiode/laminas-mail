@@ -8,36 +8,24 @@ class Sent implements Filter
 {
 	const DB_COLUMN = 't.sentAt';
 
-	/**
-	 * @var bool
-	 */
-	private $sent;
+	private bool $sent;
 
-	/**
-	 * @param bool $sent
-	 */
-	private function __construct($sent)
+	private function __construct(bool $sent)
 	{
 		$this->sent = $sent;
 	}
 
-	/**
-	 * @return Sent
-	 */
-	public static function yes()
+	public static function yes(): Sent
 	{
 		return new self(true);
 	}
 
-	/**
-	 * @return Sent
-	 */
-	public static function no()
+	public static function no(): Sent
 	{
 		return new self(false);
 	}
 
-	public function addClause(QueryBuilder $queryBuilder)
+	public function addClause(QueryBuilder $queryBuilder): void
 	{
 		if ($this->sent)
 		{

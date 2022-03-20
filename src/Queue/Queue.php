@@ -16,41 +16,21 @@ use Mail\Mail\Recipient;
 
 class Queue
 {
-	/**
-	 * @var BodyCreator
-	 */
-	private $bodyCreator;
+	private BodyCreator $bodyCreator;
 
-	/**
-	 * @var MailEntitySaver
-	 */
-	private $saver;
+	private MailEntitySaver $saver;
 
-	/**
-	 * @var FileSystemHandler
-	 */
-	private $attachmentFileSystemHandler;
+	private FileSystemHandler $attachmentFileSystemHandler;
 
-	/**
-	 * @var Mail
-	 */
-	private $mail;
+	private Mail $mail;
 
-	/**
-	 * @var MailEntity
-	 */
-	private $mailEntity;
+	private MailEntity $mailEntity;
 
 	/**
 	 * @var RecipientEntity[]
 	 */
-	private $recipients;
+	private array $recipients;
 
-	/**
-	 * @param BodyCreator $bodyCreator
-	 * @param MailEntitySaver $saver
-	 * @param FileSystemHandler $attachmentFileSystemHandler
-	 */
 	public function __construct(
 		BodyCreator $bodyCreator,
 		MailEntitySaver $saver,
@@ -63,11 +43,9 @@ class Queue
 	}
 
 	/**
-	 * @param Mail $mail
-	 * @return void
 	 * @throws Exception
 	 */
-	public function add(Mail $mail)
+	public function add(Mail $mail): void
 	{
 		$this->mail = $mail;
 
@@ -94,11 +72,7 @@ class Queue
 		$this->saver->save($this->mailEntity);
 	}
 
-	/**
-	 * @return FromEntity
-	 * @throws Exception
-	 */
-	private function makeFrom()
+	private function makeFrom(): FromEntity
 	{
 		$mailFrom = $this->mail->getFrom();
 
@@ -110,11 +84,7 @@ class Queue
 		return $fromEntity;
 	}
 
-	/**
-	 * @return ReplyToEntity|null
-	 * @throws Exception
-	 */
-	private function makeReplyTo()
+	private function makeReplyTo(): ?ReplyToEntity
 	{
 		$replyTo = $this->mail->getReplyTo();
 
@@ -131,9 +101,7 @@ class Queue
 		return $entity;
 	}
 
-	/**
-	 */
-	private function makeRecipients()
+	private function makeRecipients(): void
 	{
 		$this->addRecipientsForType($this->mail->getTo(), RecipientEntity::TYPE_TO);
 		$this->addRecipientsForType($this->mail->getCc(), RecipientEntity::TYPE_CC);
@@ -142,9 +110,8 @@ class Queue
 
 	/**
 	 * @param Recipient[] $recipients
-	 * @param int $type
 	 */
-	private function addRecipientsForType($recipients, $type)
+	private function addRecipientsForType(array $recipients, int $type): void
 	{
 		if (!$recipients)
 		{

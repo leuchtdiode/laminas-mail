@@ -28,7 +28,7 @@ class UnsentMailsSender
 	/**
 	 * @throws Exception
 	 */
-	public function send()
+	public function send(): void
 	{
 		$mails = $this->repository->filter(
 			FilterChain::create()

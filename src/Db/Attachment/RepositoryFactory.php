@@ -11,7 +11,7 @@ class RepositoryFactory implements FactoryInterface
 		ContainerInterface $container,
 		$requestedName,
 		array $options = null
-	)
+	): object
 	{
 		return $container
 			->get(EntityManager::class)

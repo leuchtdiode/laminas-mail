@@ -3,8 +3,5 @@ namespace Mail\Mail;
 
 interface PlaceholderValues
 {
-	/**
-	 * @return array
-	 */
-	public function asArray();
+	public function asArray(): array;
 }

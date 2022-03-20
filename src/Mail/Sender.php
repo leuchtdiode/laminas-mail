@@ -17,46 +17,20 @@ use Laminas\Mime\Part;
 
 class Sender
 {
-	/**
-	 * @var array
-	 */
-	private $config;
+	private array $config;
 
-	/**
-	 * @var MailEntitySaver
-	 */
-	private $saver;
+	private MailEntitySaver $saver;
 
-	/**
-	 * @var FileSystemHandler
-	 */
-	private $attachmentFileSystemHandler;
+	private FileSystemHandler $attachmentFileSystemHandler;
 
-	/**
-	 * @var AddressList
-	 */
-	private $to;
+	private AddressList $to;
 
-	/**
-	 * @var AddressList
-	 */
-	private $cc;
+	private AddressList $cc;
 
-	/**
-	 * @var AddressList
-	 */
-	private $bcc;
+	private AddressList $bcc;
 
-	/**
-	 * @var array
-	 */
-	private $mailConfig;
+	private array $mailConfig;
 
-	/**
-	 * @param array $config
-	 * @param MailEntitySaver $saver
-	 * @param FileSystemHandler $attachmentFileSystemHandler
-	 */
 	public function __construct(array $config, MailEntitySaver $saver, FileSystemHandler $attachmentFileSystemHandler)
 	{
 		$this->config                      = $config;
@@ -65,11 +39,9 @@ class Sender
 	}
 
 	/**
-	 * @param MailEntity $mailEntity
-	 * @return bool
 	 * @throws Exception
 	 */
-	public function send(MailEntity $mailEntity)
+	public function send(MailEntity $mailEntity): bool
 	{
 		$this->mailConfig = $this->config['mail'];
 
@@ -166,10 +138,7 @@ class Sender
 		return false;
 	}
 
-	/**
-	 * @param MailEntity $mailEntity
-	 */
-	private function loadRecipients(MailEntity $mailEntity)
+	private function loadRecipients(MailEntity $mailEntity): void
 	{
 		$this->to  = new AddressList();
 		$this->cc  = new AddressList();

@@ -1,6 +1,7 @@
 <?php
 
 use Ramsey\Uuid\Doctrine\UuidType;
+use Doctrine\DBAL\Driver\PDO\SQLite\Driver;
 
 return [
 	'view_manager' => [
@@ -24,7 +25,7 @@ return [
 		'connection'    => [
 			'orm_default' => [
 				'params' => [
-					'driverClass' => Doctrine\DBAL\Driver\PDOSqlite\Driver::class,
+					'driverClass' => Driver::class,
 					'driver'      => 'pdo_sqlite',
 					'path'        => __DIR__ . '/../../data/testing/test.sqlite',
 				],
