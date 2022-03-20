@@ -9,9 +9,4 @@ class Error extends Equals
 	{
 		return 't.error';
 	}
-
-	protected function getParameterName(): string
-	{
-		return 'mailError';
-	}
 }
