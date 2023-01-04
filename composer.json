@@ -18,13 +18,12 @@
 		"Mail"
 	],
 	"require": {
-		"php": "^8.0.0",
-		"laminas/laminas-servicemanager": "^3.10.0",
-		"leuchtdiode/laminas-console": "^0.1.0",
-		"laminas/laminas-mail": "^2.16.0",
-		"ramsey/uuid-doctrine": "^1.8.0",
-
-		"leuchtdiode/laminas-common": "^2.1.0"
+		"php": "^8.0",
+		"laminas/laminas-servicemanager": "^3.10",
+		"leuchtdiode/laminas-console": "^0.2",
+		"laminas/laminas-mail": "^2.16",
+		"ramsey/uuid-doctrine": "^1.8",
+		"leuchtdiode/laminas-common": "^2.1"
 	},
 	"require-dev": {
 		"leuchtdiode/laminas-testing": "^0.3.0"
