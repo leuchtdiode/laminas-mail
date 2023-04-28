@@ -3,7 +3,6 @@ namespace MailTest\Queue;
 
 use DateTime;
 use Doctrine\ORM\Tools\ToolsException;
-use Exception;
 use Mail\Db\Attachment\Entity;
 use Mail\Db\MailEntity;
 use Mail\Db\MailEntityRepository;
@@ -14,6 +13,7 @@ use Mail\Mail\PlaceholderValues;
 use Mail\Mail\Recipient;
 use Mail\Queue\Queue;
 use Testing\BaseTestCase;
+use Throwable;
 
 class QueueTest extends BaseTestCase
 {
@@ -32,7 +32,7 @@ class QueueTest extends BaseTestCase
 	}
 
 	/**
-	 * @throws Exception
+	 * @throws Throwable
 	 */
 	public function test_database_gets_filled_correct()
 	{
@@ -41,7 +41,7 @@ class QueueTest extends BaseTestCase
 		$mail->setCc(
 			[
 				Recipient::create('cc-recipient1@anything.com', 'CC-Empfänger1'),
-				Recipient::create('cc-recipient2@anything.com', 'CC-Empfänger2')
+				Recipient::create('cc-recipient2@anything.com', 'CC-Empfänger2'),
 			]
 		);
 		$mail->setBcc(
@@ -52,7 +52,7 @@ class QueueTest extends BaseTestCase
 		);
 		$mail->setTo(
 			[
-				Recipient::create('recipient@anything.com', 'Empfänger')
+				Recipient::create('recipient@anything.com', 'Empfänger'),
 			]
 		);
 		$mail->setFrom(
@@ -76,7 +76,7 @@ class QueueTest extends BaseTestCase
 				Attachment::create()
 					->setContent('attachment1')
 					->setFileName('Bild1.png')
-					->setMimeType('image/png')
+					->setMimeType('image/png'),
 			]
 		);
 
@@ -94,7 +94,9 @@ class QueueTest extends BaseTestCase
 		$entity = reset($entities);
 
 		$this->assertNotEmpty($entity->getId());
-		$this->assertEquals((new DateTime())->format('Y-m-d'), $entity->getCreatedAt()->format('Y-m-d'));
+		$this->assertEquals((new DateTime())->format('Y-m-d'),
+			$entity->getCreatedAt()
+				->format('Y-m-d'));
 		$this->assertEquals('test betreff', $entity->getSubject());
 		$this->assertEquals($this->getExpectedBody(), $entity->getBody());
 
@@ -218,7 +220,7 @@ class TestPlaceholderValues implements PlaceholderValues
 	public function asArray(): array
 	{
 		return [
-			'placeholder' => $this->placeholder
+			'placeholder' => $this->placeholder,
 		];
 	}
 }

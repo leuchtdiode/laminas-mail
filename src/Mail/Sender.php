@@ -3,10 +3,6 @@ namespace Mail\Mail;
 
 use DateTime;
 use Exception;
-use Mail\Db\MailEntity;
-use Mail\Db\MailEntitySaver;
-use Mail\Db\RecipientEntity;
-use Mail\Mail\Attachment\FileSystemHandler;
 use Laminas\Mail\AddressList;
 use Laminas\Mail\Message as MailMessage;
 use Laminas\Mail\Transport\Smtp;
@@ -14,6 +10,11 @@ use Laminas\Mail\Transport\SmtpOptions;
 use Laminas\Mime\Message as MimeMessage;
 use Laminas\Mime\Mime;
 use Laminas\Mime\Part;
+use Mail\Db\MailEntity;
+use Mail\Db\MailEntitySaver;
+use Mail\Db\RecipientEntity;
+use Mail\Mail\Attachment\FileSystemHandler;
+use Throwable;
 
 class Sender
 {
@@ -39,7 +40,7 @@ class Sender
 	}
 
 	/**
-	 * @throws Exception
+	 * @throws Throwable
 	 */
 	public function send(MailEntity $mailEntity): bool
 	{
@@ -110,7 +111,8 @@ class Sender
 				$attachment->setDisposition(Mime::DISPOSITION_ATTACHMENT);
 				$attachment->setEncoding(Mime::ENCODING_BASE64);
 				$attachment->setCharset('UTF-8');
-				$attachment->setId($attachmentEntity->getId()->toString());
+				$attachment->setId($attachmentEntity->getId()
+					->toString());
 
 				$mailParts[] = $attachment;
 			}

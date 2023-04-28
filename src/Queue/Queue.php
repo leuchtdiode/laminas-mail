@@ -1,8 +1,8 @@
 <?php
 namespace Mail\Queue;
 
-use Exception;
 use Doctrine\Common\Collections\ArrayCollection;
+use Exception;
 use Mail\Db\Attachment\Entity as AttachmentEntity;
 use Mail\Db\FromEntity;
 use Mail\Db\MailEntity;
@@ -13,6 +13,7 @@ use Mail\Mail\Attachment\FileSystemHandler;
 use Mail\Mail\BodyCreator;
 use Mail\Mail\Mail;
 use Mail\Mail\Recipient;
+use Throwable;
 
 class Queue
 {
@@ -37,13 +38,13 @@ class Queue
 		FileSystemHandler $attachmentFileSystemHandler
 	)
 	{
-		$this->bodyCreator = $bodyCreator;
-		$this->saver = $saver;
+		$this->bodyCreator                 = $bodyCreator;
+		$this->saver                       = $saver;
 		$this->attachmentFileSystemHandler = $attachmentFileSystemHandler;
 	}
 
 	/**
-	 * @throws Exception
+	 * @throws Throwable
 	 */
 	public function add(Mail $mail): void
 	{
@@ -133,7 +134,7 @@ class Queue
 	/**
 	 * @throws Exception
 	 */
-	private function makeAttachments()
+	private function makeAttachments(): void
 	{
 		foreach ($this->mail->getAttachments() as $attachment)
 		{

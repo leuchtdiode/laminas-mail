@@ -8,7 +8,7 @@ class Recipient
 	/**
 	 * @var string|null
 	 */
-	private ?string $name = null;
+	private ?string $name;
 
 	private function __construct(
 		$email,
@@ -29,7 +29,7 @@ class Recipient
 		return $this->email;
 	}
 
-	public function setEmail(string $email)
+	public function setEmail(string $email): void
 	{
 		$this->email = $email;
 	}
@@ -39,7 +39,7 @@ class Recipient
 		return $this->name;
 	}
 
-	public function setName(?string $name)
+	public function setName(?string $name): void
 	{
 		$this->name = $name;
 	}
