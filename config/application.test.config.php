@@ -4,6 +4,8 @@ $appConfig = [];
 
 $appConfig['modules']                                             = [
 	'Laminas\Router',
+	'Laminas\Cache',
+	'Laminas\Cache\Storage\Adapter\Memory',
 	'DoctrineModule',
 	'DoctrineORMModule',
 	'Mail',

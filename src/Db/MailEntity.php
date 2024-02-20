@@ -34,15 +34,15 @@ class MailEntity implements Entity
 	#[ORM\Column(type: 'string', nullable: true)]
 	private ?string $error = null;
 
+	/**
+	 * @var Collection|RecipientEntity[]
+	 **/
 	#[ORM\OneToMany(
 		mappedBy: 'mail',
 		targetEntity: RecipientEntity::class,
 		cascade: [ 'all'],
 		orphanRemoval: true
 	)]
-	/**
-	 * @var Collection|RecipientEntity[]
-	 **/
 	private Collection|array $recipients;
 
 	#[ORM\OneToOne(
@@ -61,15 +61,15 @@ class MailEntity implements Entity
 	)]
 	private ?ReplyToEntity $replyTo = null;
 
+	/**
+	 * @var Collection|AttachmentEntity[]
+	 **/
 	#[ORM\OneToMany(
 		mappedBy: 'mail',
 		targetEntity: AttachmentEntity::class,
 		cascade: [ 'all'],
 		orphanRemoval: true
 	)]
-	/**
-	 * @var Collection|AttachmentEntity[]
-	 **/
 	private Collection|array $attachments;
 
 	/**

@@ -3,12 +3,12 @@ namespace Mail\Queue;
 
 use Common\Db\FilterChain;
 use Common\Db\OrderChain;
-use Exception;
 use Mail\Db\MailEntity\Filter\Error;
 use Mail\Db\MailEntity\Filter\Sent;
 use Mail\Db\MailEntity\Order\CreatedAt;
 use Mail\Mail\Sender as MailSender;
 use Mail\Db\MailEntityRepository;
+use Throwable;
 
 class UnsentMailsSender
 {
@@ -26,7 +26,7 @@ class UnsentMailsSender
 	}
 
 	/**
-	 * @throws Exception
+	 * @throws Throwable
 	 */
 	public function send(): void
 	{

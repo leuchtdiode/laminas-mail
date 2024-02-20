@@ -1,11 +1,11 @@
 <?php
 namespace Mail\Command\Queue;
 
-use Exception;
 use Mail\Command\BaseCommand;
 use Mail\Queue\UnsentMailsSender;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Throwable;
 
 class Send extends BaseCommand
 {
@@ -26,7 +26,7 @@ class Send extends BaseCommand
 	}
 
 	/**
-	 * @throws Exception
+	 * @throws Throwable
 	 */
 	protected function execute(InputInterface $input, OutputInterface $output): int
 	{
